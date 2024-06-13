@@ -1,0 +1,36 @@
+---
+title: "NYC-Census-Tracts"
+author: "Areeb"
+format: html
+echo: false
+message: false
+warning: false
+---
+
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(tidycensus)
+library(primer.data)
+library(ggbeeswarm)
+```
+
+```{r}
+x <- read_csv("data/nyc_tracts.csv", show_col_types = FALSE)
+```
+
+```{r}
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, color = med_income)) +
+    geom_quasirandom() +
+    scale_x_continuous(labels = scales::dollar_format()) + scale_color_viridis_c(guide = "none") + 
+    labs(title = "Household income distribution by largest racial/ethnic group",
+       subtitle = "Census tracts, New York City",
+       x = "Median household income",
+       y = NULL)
+```
+
